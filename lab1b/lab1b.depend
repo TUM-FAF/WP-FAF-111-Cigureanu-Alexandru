@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1361484744 source:d:\alex\faf-111\semestrul 04\windows programming\lab1b\main.cpp
+	"windows.h"
+	"TCHAR.H"
+	"cstdlib"
+
