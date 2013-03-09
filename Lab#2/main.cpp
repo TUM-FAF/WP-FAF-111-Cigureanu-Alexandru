@@ -177,6 +177,10 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             DeleteObject (hBrushStatic) ;
             hBrushStatic = CreateSolidBrush (GetSysColor (COLOR_BTNHIGHLIGHT)) ;
             return 0 ;
+        case WM_CLOSE:
+            if(MessageBox(hwnd, "Do you want to exit?", "EXIT", MB_OKCANCEL) == IDOK)
+                DestroyWindow(hwnd);
+            break;
         case WM_DESTROY :
             DeleteObject ((HBRUSH)
                 SetClassLong (hwnd, GCL_HBRBACKGROUND, (LONG)
