@@ -3,10 +3,19 @@ COLORS1.C -- Colors Using Scroll Bars
 (c) Charles Petzold, 1998
 ----------------------------------------*/
 #include <windows.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <tchar.h>
+#include <commctrl.h>
 
 #define IDM_SYS_ABOUT 1
 #define IDM_SYS_HELP 2
 #define IDM_SYS_REMOVE 3
+#define IDC_TASK_LIST 15
+#define IDC_TEXT_INPUT 999
+#define IDC_ADD_BUTTON 17
+#define IDC_TASK_LIST 998
 
 
 LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM);
@@ -14,6 +23,7 @@ LRESULT CALLBACK ScrollProc (HWND, UINT, WPARAM, LPARAM);
 
 int idFocus ;
 WNDPROC OldScroll ;
+int focused = 0;
 
 static TCHAR szAppName[] = TEXT ("Lab#2 Cigureanu Alexandru, FAF-111") ;
 
@@ -41,7 +51,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 
     hwnd = CreateWindow (szAppName, TEXT ("Lab#2 Cigureanu Alexandru, FAF-111"), WS_OVERLAPPEDWINDOW,
                         0, 0,
-                        400, 400,
+                        600, 400,
                       NULL, NULL, hInstance, NULL);
     hMenu = GetSystemMenu (hwnd, FALSE) ;
         AppendMenu (hMenu, MF_SEPARATOR, 0, NULL) ;
@@ -61,13 +71,20 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
     static COLORREF crPrim = RGB (255,0,0);
     static HBRUSH hBrush, hBrushStatic;
-    static HWND hwndScroll, hwndLabel, hwndValue, hwndRect;
+    static HWND hwndScroll, hwndLabel, hwndValue, hwndRect1, hwndRect2, hwndList, hwndTextInput, hwndAddButton;
     static int color, cyChar;
     static RECT rcColor ;
     static TCHAR * szColorLabel = TEXT ("White");
     HINSTANCE hInstance;
     int i, cxClient, cyClient;
     TCHAR szBuffer[10];
+    LRESULT textSize;
+    char * msg = new char[100];
+    char * placeholder = new char[26];
+    placeholder = "Type here the new task...";
+    int index;
+    HDC hdc;
+
 
     switch (message) {
         case WM_SYSCOMMAND:
@@ -89,10 +106,17 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             break ;
         case WM_CREATE :
             hInstance = (HINSTANCE) GetWindowLong (hwnd, GWL_HINSTANCE) ;
-            hwndRect = CreateWindow (TEXT ("static"), NULL,
+            hwndRect1 = CreateWindow (TEXT ("static"), NULL,
                                      WS_CHILD | WS_VISIBLE | SS_WHITERECT,
-                                     0, 0, 200, 400,
+                                     5, 5, 200, 365,
                                      hwnd, (HMENU) 9, hInstance, NULL) ;
+            hwndRect2 = CreateWindow (TEXT ("static"), NULL,
+                                     WS_CHILD | WS_VISIBLE | SS_WHITERECT,
+                                     210, 5, 378, 365,
+                                     hwnd, (HMENU) 9, hInstance, NULL) ;
+
+
+
             hwndScroll = CreateWindow (TEXT ("scrollbar"), NULL,
                                               WS_CHILD | WS_VISIBLE | WS_TABSTOP | SBS_VERT,
                                               0, 30, 20, 300,
@@ -110,20 +134,128 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                                               0, 340, 30, 30,
                                               hwnd, (HMENU) 6,
                                               hInstance, NULL) ;
+            hwndList = CreateWindow( TEXT("listbox"), "",
+                                    WS_CHILD | WS_VISIBLE | LBS_STANDARD | ES_AUTOVSCROLL | WS_BORDER,
+                                    215, 40, 320, 335,
+                                    hwnd, (HMENU)IDC_TASK_LIST,
+                                    hInstance, NULL);
+
+            hwndTextInput = CreateWindow( TEXT("edit"), "",
+                                        WS_VISIBLE | WS_CHILD | WS_BORDER | ES_AUTOHSCROLL,
+                                        215, 10, 368, 25,
+                                        hwnd, (HMENU)IDC_TEXT_INPUT,
+                                        hInstance, NULL);
+            hwndAddButton = CreateWindow(TEXT("button"), TEXT("Add"),
+                                        WS_CHILD |WS_VISIBLE | BS_PUSHBUTTON,
+                                        540, 40, 43, 325,
+                                        hwnd, (HMENU)IDC_ADD_BUTTON,
+                                        hInstance, NULL);
+
             OldScroll = (WNDPROC) SetWindowLong (hwndScroll, GWL_WNDPROC, (LONG) ScrollProc) ;
             hBrush = CreateSolidBrush (crPrim) ;
 
             hBrushStatic = CreateSolidBrush (GetSysColor (COLOR_BTNHIGHLIGHT)) ;
             cyChar = HIWORD (GetDialogBaseUnits ()) ;
             return 0 ;
+
+        case WM_COMMAND:
+            switch (LOWORD(wParam)){
+                case IDC_ADD_BUTTON:
+                    textSize = SendMessage(hwndTextInput, WM_GETTEXT, 100, (LPARAM)msg);
+                    msg[textSize] = _T('\0');
+
+                    if(strlen(msg) && strcmp(msg, placeholder))
+                    {
+                        char *item = new char[200];
+                        strcpy(item, " - "); // Managing the new string
+                        strcat(item, msg);
+                        SendMessage(hwndList, LB_ADDSTRING, 0, (LPARAM)item);
+                        delete [] item; // Managing the memory
+
+                        SendMessage(
+                            hwndTextInput,
+                            WM_SETTEXT,
+                            TRUE,
+                            (LPARAM)placeholder); // Recovering the placeholder
+                        focused = 0;
+                    }
+                    RedrawWindow(hwnd, NULL, NULL, RDW_INVALIDATE | RDW_ERASE);
+                    break;
+                case IDC_TEXT_INPUT:
+                    if(HIWORD(wParam) == EN_SETFOCUS)
+                    {
+                        textSize = SendMessage(hwndTextInput, WM_GETTEXT, 100, (LPARAM)msg);
+                        msg[textSize] = _T('\0');
+                        if(!strcmp(msg, placeholder))
+                        {
+                            SendMessage(hwndTextInput, WM_SETTEXT, TRUE,(LPARAM)"");// Clearing the text input
+                            focused = 1;
+                            RedrawWindow(hwnd, NULL, NULL, RDW_INVALIDATE);
+                        }
+                    }
+                    else if(HIWORD(wParam) == EN_KILLFOCUS)
+                    {
+                        textSize = SendMessage(hwndTextInput, WM_GETTEXT, 100, (LPARAM)msg);
+                        msg[textSize] = _T('\0');
+                        if(!strcmp(msg, ""))
+                        {
+                            SendMessage(
+                                hwndTextInput,
+                                WM_SETTEXT,
+                                TRUE,
+                                (LPARAM)placeholder); // Recovering the placeholder
+                            focused = 0;
+                            RedrawWindow(hwnd, NULL, NULL, RDW_INVALIDATE);
+                        }
+                    }
+                    break;
+                case IDC_TASK_LIST:
+                    switch(HIWORD(wParam))
+                    {
+                        case LBN_SELCHANGE:
+                            RedrawWindow(hwnd, NULL, NULL, RDW_INVALIDATE | RDW_ERASE);
+                            break;
+
+                        case LBN_DBLCLK:
+                            index = SendMessage(hwndList, LB_GETCURSEL, 0, 0);
+                            SendMessage(hwndList, LB_DELETESTRING, (WPARAM)index, 0);
+                            RedrawWindow(hwnd, NULL, NULL, RDW_INVALIDATE | RDW_ERASE);
+                            break;
+                    }
+                    break;
+            }break;
+        /*case WM_CTLCOLOREDIT:
+            switch(GetDlgCtrlID((HWND)lParam))
+            {
+                case IDC_TEXT_INPUT:
+                {
+                    hdc = (HDC)wParam; //Get handles
+                    if(focused)
+                    {
+                        color = CreateSolidBrush(RGB(255, 255, 255));
+                        SetTextColor(hdc, RGB(0, 0, 0)); // Text color
+                        SetBkMode(hdc, TRANSPARENT); // EditBox Backround Mode
+                        SetBkColor(hdc,(LONG)color); // Backround color for EditBox
+                    }
+                    else
+                    {
+                        color = CreateSolidBrush(RGB(255, 255, 255));
+                        SetTextColor(hdc, RGB(150, 150, 150)); // Text color
+                        SetBkMode(hdc, TRANSPARENT); // EditBox Backround Mode
+                        SetBkColor(hdc,(LONG)color); // Backround color for EditBox
+                    }
+                    return (LONG)color; // Paint it
+                }
+            }
+            break;*/
         case WM_SIZE :
             cxClient = LOWORD (lParam) ;
             cyClient = HIWORD (lParam) ;
-            SetRect (&rcColor, 200, 0, cxClient, cyClient) ;
+            SetRect (&rcColor, 0, 0, cxClient, cyClient) ;
             SetFocus(hwnd);
             return 0 ;
         case WM_SETFOCUS :
-            SetFocus (hwndScroll) ;
+            //SetFocus (hwndScroll) ;
             return 0 ;
         case WM_VSCROLL :
             i = GetWindowLong ((HWND) lParam, GWL_ID) ;
