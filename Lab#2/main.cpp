@@ -1,7 +1,3 @@
-/*----------------------------------------
-COLORS1.C -- Colors Using Scroll Bars
-(c) Charles Petzold, 1998
-----------------------------------------*/
 #include <windows.h>
 #include <stdlib.h>
 #include <stdio.h>
