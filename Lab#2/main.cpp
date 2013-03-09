@@ -106,11 +106,11 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                                      WS_CHILD | WS_VISIBLE | SS_WHITERECT,
                                      5, 5, 200, 365,
                                      hwnd, (HMENU) 9, hInstance, NULL) ;
-            hwndRect2 = CreateWindow (TEXT ("static"), NULL,
+            /*hwndRect2 = CreateWindow (TEXT ("static"), NULL,
                                      WS_CHILD | WS_VISIBLE | SS_WHITERECT,
                                      210, 5, 378, 365,
                                      hwnd, (HMENU) 9, hInstance, NULL) ;
-
+*/
 
 
             hwndScroll = CreateWindow (TEXT ("scrollbar"), NULL,
@@ -136,7 +136,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                                     hwnd, (HMENU)IDC_TASK_LIST,
                                     hInstance, NULL);
 
-            hwndTextInput = CreateWindow( TEXT("edit"), "",
+            hwndTextInput = CreateWindow( TEXT("edit"), placeholder,
                                         WS_VISIBLE | WS_CHILD | WS_BORDER | ES_AUTOHSCROLL,
                                         215, 10, 368, 25,
                                         hwnd, (HMENU)IDC_TEXT_INPUT,
@@ -244,6 +244,13 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
             }
             break;*/
+        case WM_GETMINMAXINFO: {
+            DefWindowProc(hwnd, message, wParam, lParam);
+            MINMAXINFO* mmi = (MINMAXINFO*)lParam;
+            mmi->ptMaxTrackSize.x = 600;
+            mmi->ptMaxTrackSize.y = 400;
+            return 0;
+            }
         case WM_SIZE :
             cxClient = LOWORD (lParam) ;
             cyClient = HIWORD (lParam) ;
