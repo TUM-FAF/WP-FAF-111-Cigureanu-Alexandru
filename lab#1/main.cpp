@@ -7,8 +7,8 @@ enum { ID_LABEL = 1,ID_EDIT, ID_BUTTON0,ID_BUTTON1};
 LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 HINSTANCE g_hInst;
-TCHAR	szAppName[]	= TEXT("Alexandru Cigureanu");
-TCHAR	szWinClass[]	= TEXT("WIN_CLASS");
+TCHAR	szAppName[]	 = TEXT("Alexandru Cigureanu");
+TCHAR	szWinClass[] = TEXT("WIN_CLASS");
 
 //static field
 HWND static_label1;
@@ -121,7 +121,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
             hdc = BeginPaint(hwnd, &ps);
                 CreateText(hdc, hFont, rect, a, 20, 15, 100, 50, 0, RGB(123,123,123));
 			EndPaint(hwnd, &ps);
-	}break;
+        }break;
 		case WM_COMMAND: //Command from Child windows and menus are under this message
             switch(wParam) {
                 case ID_BUTTON0: {
