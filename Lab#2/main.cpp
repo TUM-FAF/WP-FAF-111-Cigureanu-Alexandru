@@ -37,8 +37,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
     wndclass.cbWndExtra = 0 ;
     wndclass.hInstance = hInstance ;
     wndclass.hIcon  = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON));
-
-    wndclass.hCursor = LoadCursor (NULL, IDC_ARROW) ;
+    wndclass.hCursor = LoadCursor(NULL, IDC_HAND);
     wndclass.hbrBackground = CreateSolidBrush (0) ;
     wndclass.lpszMenuName = NULL ;
     wndclass.lpszClassName = szAppName ;
@@ -83,9 +82,9 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     int index;
     HDC hdc;
     HICON hIcon, hIconSm;
-
-
+    HCURSOR hCursor;// = LoadCursor (hInstance, MAKEINTRESOURCE (IDC_CURSOR)) ;
     switch (message) {
+
         case WM_SYSCOMMAND:
 
             switch (LOWORD (wParam)) {
@@ -106,6 +105,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
         case WM_CREATE :
 
             hInstance = (HINSTANCE) GetWindowLong (hwnd, GWL_HINSTANCE) ;
+
             hwndRect1 = CreateWindow (TEXT ("static"), NULL,
                                      WS_CHILD | WS_VISIBLE | SS_WHITERECT,
                                      5, 5, 200, 365,
@@ -134,6 +134,8 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                                               0, 340, 30, 30,
                                               hwnd, (HMENU) 6,
                                               hInstance, NULL) ;
+
+
             hwndList = CreateWindow( TEXT("listbox"), "",
                                     WS_CHILD | WS_VISIBLE | LBS_STANDARD | ES_AUTOVSCROLL | WS_BORDER,
                                     215, 40, 320, 335,
@@ -157,7 +159,16 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             hBrushStatic = CreateSolidBrush (GetSysColor (COLOR_BTNHIGHLIGHT)) ;
             cyChar = HIWORD (GetDialogBaseUnits ()) ;
             return 0 ;
+      case WM_SETCURSOR:
+           hInstance = (HINSTANCE) GetWindowLong (hwnd, GWL_HINSTANCE) ;
+            hCursor = LoadCursor (hInstance, MAKEINTRESOURCE (IDC_CURSOR)) ;
 
+            if (LOWORD(lParam) == HTCLIENT)
+			{
+				SetCursor(hCursor);
+				return TRUE;
+			}
+            break;
         case WM_COMMAND:
             switch (LOWORD(wParam)){
                 case IDC_ADD_BUTTON:
@@ -268,6 +279,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                 default :
                     break ;
             }
+
             SetScrollPos (hwndScroll, SB_CTL, color, TRUE) ;
             wsprintf (szBuffer, TEXT ("%i"), color) ;
             SetWindowText (hwndValue, szBuffer) ;
@@ -295,6 +307,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
         case WM_CLOSE:
             if(MessageBox(hwnd, "Do you want to exit?", "EXIT", MB_OKCANCEL) == IDOK)
                 DestroyWindow(hwnd);
+                return 0;
             break;
         case WM_DESTROY :
             DeleteObject ((HBRUSH)

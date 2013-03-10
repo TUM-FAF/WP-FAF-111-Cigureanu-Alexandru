@@ -37,8 +37,18 @@
 			<Add library="kernel32" />
 			<Add library="comctl32" />
 		</Linker>
+		<Unit filename="cursor2lab2.cur" />
+		<Unit filename="cursor2lab2.ico" />
+		<Unit filename="cursorlab2.cur" />
+		<Unit filename="cursorlab2.ico" />
 		<Unit filename="lab2.ico" />
 		<Unit filename="main.cpp" />
+		<Unit filename="pointer.cur" />
+		<Unit filename="rc/cursor2lab2.cur" />
+		<Unit filename="rc/cursor2lab2.ico" />
+		<Unit filename="rc/cursorlab2.cur" />
+		<Unit filename="rc/cursorlab2.ico" />
+		<Unit filename="rc/pointer.cur" />
 		<Unit filename="resource.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

@@ -1,4 +1,5 @@
 #define IDI_ICON 303
+#define IDC_CURSOR 667
 #ifndef RESOURCE_H_INCLUDED
 #define RESOURCE_H_INCLUDED
 

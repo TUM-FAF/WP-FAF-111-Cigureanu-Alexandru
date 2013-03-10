@@ -1,3 +1,5 @@
 #include "resource.h"
 
 IDI_ICON ICON DISCARDABLE "lab2.ico"
+
+IDC_CURSOR CURSOR DISCARDABLE "cursorlab2.cur"
