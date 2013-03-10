@@ -32,9 +32,9 @@ For this Laboratory work I have bean using .resource file because I din't find o
 11. On clicking exit button, appears the confirmation dialog box.
 12. If previously was pushed button Ctrl and the SpaceBar, then program inits the exit.
 
-![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Iachimovschi-Mihai/master/Lab%232/demo.png)
+![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Cigureanu-Alexandru/master/Lab%232/demo.png)
 
-![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Iachimovschi-Mihai/master/Lab%232/screenShot.png)
+![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Cigureanu-Alexandru/master/Lab%232/screenShot.png)
 
 ## Conclusion
 What can I say. It was difficult for me, but I managed do do almost everuthing, not in tima, but still I've done it.
