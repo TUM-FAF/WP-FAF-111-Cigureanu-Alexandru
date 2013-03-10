@@ -37,9 +37,13 @@
 			<Add library="kernel32" />
 			<Add library="comctl32" />
 		</Linker>
+		<Unit filename="lab2.ico" />
 		<Unit filename="main.cpp" />
 		<Unit filename="resource.h">
 			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="resource.rc">
+			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Extensions>
 			<code_completion />

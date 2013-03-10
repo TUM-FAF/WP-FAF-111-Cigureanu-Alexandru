@@ -4,6 +4,7 @@
 #include <string.h>
 #include <tchar.h>
 #include <commctrl.h>
+#include "resource.h"
 
 #define IDM_SYS_ABOUT 1
 #define IDM_SYS_HELP 2
@@ -35,7 +36,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
     wndclass.cbClsExtra = 0 ;
     wndclass.cbWndExtra = 0 ;
     wndclass.hInstance = hInstance ;
-    wndclass.hIcon = LoadIcon (NULL, IDI_APPLICATION) ;
+    wndclass.hIcon  = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON));
+
     wndclass.hCursor = LoadCursor (NULL, IDC_ARROW) ;
     wndclass.hbrBackground = CreateSolidBrush (0) ;
     wndclass.lpszMenuName = NULL ;
@@ -80,6 +82,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     placeholder = "Type here the new task...";
     int index;
     HDC hdc;
+    HICON hIcon, hIconSm;
 
 
     switch (message) {
@@ -101,6 +104,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             break ;
         case WM_CREATE :
+
             hInstance = (HINSTANCE) GetWindowLong (hwnd, GWL_HINSTANCE) ;
             hwndRect1 = CreateWindow (TEXT ("static"), NULL,
                                      WS_CHILD | WS_VISIBLE | SS_WHITERECT,
@@ -163,7 +167,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if(strlen(msg) && strcmp(msg, placeholder))
                     {
                         char *item = new char[200];
-                        strcpy(item, " - "); // Managing the new string
+                        strcpy(item, " * "); // Managing the new string
                         strcat(item, msg);
                         SendMessage(hwndList, LB_ADDSTRING, 0, (LPARAM)item);
                         delete [] item; // Managing the memory
@@ -220,30 +224,6 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                     break;
             }break;
-        /*case WM_CTLCOLOREDIT:
-            switch(GetDlgCtrlID((HWND)lParam))
-            {
-                case IDC_TEXT_INPUT:
-                {
-                    hdc = (HDC)wParam; //Get handles
-                    if(focused)
-                    {
-                        color = CreateSolidBrush(RGB(255, 255, 255));
-                        SetTextColor(hdc, RGB(0, 0, 0)); // Text color
-                        SetBkMode(hdc, TRANSPARENT); // EditBox Backround Mode
-                        SetBkColor(hdc,(LONG)color); // Backround color for EditBox
-                    }
-                    else
-                    {
-                        color = CreateSolidBrush(RGB(255, 255, 255));
-                        SetTextColor(hdc, RGB(150, 150, 150)); // Text color
-                        SetBkMode(hdc, TRANSPARENT); // EditBox Backround Mode
-                        SetBkColor(hdc,(LONG)color); // Backround color for EditBox
-                    }
-                    return (LONG)color; // Paint it
-                }
-            }
-            break;*/
         case WM_GETMINMAXINFO: {
             DefWindowProc(hwnd, message, wParam, lParam);
             MINMAXINFO* mmi = (MINMAXINFO*)lParam;
