@@ -34,17 +34,17 @@
 #define IDC_ADD_BUTTON 61
 
 //rectangles 71-80
-#define IDC_RECTANGLE 71
+#define IDC_RECTANGLE 71-80
 
 
 LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK ScrollProc (HWND, UINT, WPARAM, LPARAM);
 
-int idFocus ;
+int idFocus ;                                                                   // Focus for scroll bars
 WNDPROC OldScroll1 ;
 WNDPROC OldScroll2 ;
 WNDPROC OldScroll3 ;
-int focused = 0;
+int focused = 0;                                                                //focus for input field
 int windowWidth = 600;
 int windowHeight = 400;
 static TCHAR szAppName[] = TEXT ("Lab#2 Cigureanu Alexandru, FAF-111") ;
@@ -71,9 +71,9 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
         return 0 ;
     }
 
-    hwnd = CreateWindow (szAppName, TEXT ("Lab#2 Cigureanu Alexandru, FAF-111"), WS_OVERLAPPEDWINDOW,
+    hwnd = CreateWindow (szAppName, TEXT ("Lab#2 Cigureanu Alexandru, FAF-111"), WS_OVERLAPPEDWINDOW, // window
                          0, 0, windowWidth, windowHeight, NULL, NULL, hInstance, NULL);
-    hMenu = GetSystemMenu (hwnd, FALSE);
+    hMenu = GetSystemMenu (hwnd, FALSE);                                                              // systemMenu
         AppendMenu (hMenu, MF_SEPARATOR, 0, NULL);
         AppendMenu (hMenu, MF_STRING, IDM_SYS_ABOUT, TEXT ("About"));
         AppendMenu (hMenu, MF_STRING, IDM_SYS_HELP, TEXT ("Help"));
@@ -89,14 +89,14 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 }
 
 LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    static COLORREF crPrim = RGB (0,0,0);
-    static HBRUSH hBrush, hBrushStatic;
-    static HWND hwndScroll1, hwndScroll2, hwndScroll3;
-    static HWND hwndLabel1, hwndLabel2, hwndLabel3;
-    static HWND hwndValue1, hwndValue2, hwndValue3;
-    static HWND hwndRect1, hwndList, hwndTextInput, hwndAddButton;
+    static COLORREF crPrim = RGB (0,0,0);                                       // color for labels
+    static HBRUSH hBrush, hBrushStatic;                                         //
+    static HWND hwndScroll1, hwndScroll2, hwndScroll3;                          //
+    static HWND hwndLabel1, hwndLabel2, hwndLabel3;                             //variables speak about themselves
+    static HWND hwndValue1, hwndValue2, hwndValue3;                             //
+    static HWND hwndRect1, hwndList, hwndTextInput, hwndAddButton;              //
     static int color;
-    static RECT rcColor ;
+    static RECT rcColor ;                                                       //"background/border" - inmy application color
     static TCHAR * szColorLabel1 = TEXT ("Border");
     static TCHAR * szColorLabel2 = TEXT ("Width");
     static TCHAR * szColorLabel3 = TEXT ("Height");
@@ -116,21 +116,21 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message) {
 
-        case WM_SYSCOMMAND :
+        case WM_SYSCOMMAND :                                                    // system Comands handle
 
             switch (LOWORD (wParam)) {
 
                 case IDM_SYS_ABOUT :
 
-                    MessageBox (hwnd, TEXT ("Alexandru Cigureanu\nst. gr. FAF-111"),
+                    MessageBox (hwnd, TEXT ("Alexandru Cigureanu\nst. gr. FAF-111"),//about menu
                                 szAppName, MB_OK | MB_ICONINFORMATION);
                     return 0;
                 case IDM_SYS_HELP :
 
-                    MessageBox (hwnd, TEXT ("JOS ALIANTA!!!"),
+                    MessageBox (hwnd, TEXT ("JOS ALIANTA!!!"),                  //help menu
                                 szAppName, MB_OK | MB_ICONEXCLAMATION);
                     return 0;
-                case IDM_SYS_REMOVE :
+                case IDM_SYS_REMOVE :                                           //remove adds
 
                     GetSystemMenu (hwnd, TRUE);
                     return 0 ;
@@ -143,38 +143,40 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                                       5, 5, 200, 365, hwnd, (HMENU) IDC_RECTANGLE, hInstance, NULL);
 //////////////////////////scroll1
             hwndScroll1 = CreateWindow (TEXT ("scrollbar"), NULL, WS_CHILD | WS_VISIBLE | WS_TABSTOP | SBS_VERT,
-                                              10, 30, 20, 300, hwnd, (HMENU) IDC_SCROLL_BAR1, hInstance, NULL);
-                                              SetScrollRange (hwndScroll1, SB_CTL, 0, 255, FALSE);
-                                              SetScrollPos (hwndScroll1, SB_CTL, 0, FALSE);
+                                        10, 30, 20, 300, hwnd, (HMENU) IDC_SCROLL_BAR1, hInstance, NULL);
+                                        SetScrollRange (hwndScroll1, SB_CTL, 0, 255, FALSE);
+                                        SetScrollPos (hwndScroll1, SB_CTL, 0, FALSE);
             hwndLabel1  = CreateWindow (TEXT ("static"), szColorLabel1, WS_CHILD | WS_VISIBLE | SS_CENTER,
-                                              5, 5, 45, 18, hwnd, (HMENU) IDC_LABEL1, hInstance, NULL);
+                                        5, 5, 45, 18, hwnd, (HMENU) IDC_LABEL1, hInstance, NULL);
             hwndValue1  = CreateWindow (TEXT ("static"), TEXT ("0"),WS_CHILD | WS_VISIBLE | SS_CENTER,
-                                              5, 340, 30, 30, hwnd, (HMENU) IDC_VAR_LABEL1, hInstance, NULL);
+                                        5, 340, 30, 30, hwnd, (HMENU) IDC_VAR_LABEL1, hInstance, NULL);
 //////////////////////////scroll2
             hwndScroll2 = CreateWindow (TEXT ("scrollbar"), NULL, WS_CHILD | WS_VISIBLE | WS_TABSTOP | SBS_VERT,
-                                              65, 30, 20, 300, hwnd, (HMENU) IDC_SCROLL_BAR2, hInstance, NULL);
-                                              SetScrollRange (hwndScroll2, SB_CTL, 600, 700, FALSE);
-                                              SetScrollPos (hwndScroll2, SB_CTL, 0, FALSE);
+                                        65, 30, 20, 300, hwnd, (HMENU) IDC_SCROLL_BAR2, hInstance, NULL);
+                                        SetScrollRange (hwndScroll2, SB_CTL, 600, 700, FALSE);
+                                        SetScrollPos (hwndScroll2, SB_CTL, 0, FALSE);
             hwndLabel2  = CreateWindow (TEXT ("static"), szColorLabel2, WS_CHILD | WS_VISIBLE | SS_CENTER,
-                                              55, 5, 45, 18, hwnd, (HMENU) IDC_LABEL2, hInstance, NULL);
+                                        55, 5, 45, 18, hwnd, (HMENU) IDC_LABEL2, hInstance, NULL);
             hwndValue2  = CreateWindow (TEXT ("static"), TEXT ("600"), WS_CHILD | WS_VISIBLE | SS_CENTER,
-                                              60, 340, 30, 30, hwnd, (HMENU) IDC_VAR_LABEL2, hInstance, NULL);
+                                        60, 340, 30, 30, hwnd, (HMENU) IDC_VAR_LABEL2, hInstance, NULL);
 //////////////////////////scrol3
             hwndScroll3 = CreateWindow (TEXT ("scrollbar"), NULL, WS_CHILD | WS_VISIBLE | WS_TABSTOP | SBS_VERT,
-                                              115, 30, 20, 300, hwnd, (HMENU) IDC_SCROLL_BAR3, hInstance, NULL);
-                                              SetScrollRange (hwndScroll3, SB_CTL, 400, 500, FALSE);
-                                              SetScrollPos (hwndScroll3, SB_CTL, 0, FALSE);
+                                        115, 30, 20, 300, hwnd, (HMENU) IDC_SCROLL_BAR3, hInstance, NULL);
+                                        SetScrollRange (hwndScroll3, SB_CTL, 400, 500, FALSE);
+                                        SetScrollPos (hwndScroll3, SB_CTL, 0, FALSE);
             hwndLabel3  = CreateWindow (TEXT ("static"), szColorLabel3, WS_CHILD | WS_VISIBLE | SS_CENTER,
-                                              105, 5, 45, 18, hwnd, (HMENU) IDC_LABEL3, hInstance, NULL);
+                                        105, 5, 45, 18, hwnd, (HMENU) IDC_LABEL3, hInstance, NULL);
             hwndValue3  = CreateWindow (TEXT ("static"), TEXT ("400"), WS_CHILD | WS_VISIBLE | SS_CENTER,
-                                              110, 340, 30, 30, hwnd, (HMENU) IDC_VAR_LABEL3, hInstance, NULL);
-
+                                        110, 340, 30, 30, hwnd, (HMENU) IDC_VAR_LABEL3, hInstance, NULL);
+//////////////////////////list
             hwndList = CreateWindow(TEXT("listbox"), "", WS_CHILD | WS_VISIBLE | LBS_STANDARD | ES_AUTOVSCROLL | WS_BORDER,
                                     215, 33, 315, 340, hwnd, (HMENU)IDC_TASK_LIST, hInstance, NULL);
+//////////////////////////input
             hwndTextInput = CreateWindow(TEXT("edit"), placeholder, WS_VISIBLE | WS_CHILD | WS_BORDER | ES_AUTOHSCROLL,
                                          215, 5, 373, 20, hwnd, (HMENU)IDC_TEXT_INPUT, hInstance, NULL);
+//////////////////////////button
             hwndAddButton = CreateWindow(TEXT("button"), TEXT("Add"), WS_CHILD |WS_VISIBLE | BS_PUSHBUTTON,
-                                        540, 34, 47, 336, hwnd, (HMENU)IDC_ADD_BUTTON, hInstance, NULL);
+                                         540, 34, 47, 336, hwnd, (HMENU)IDC_ADD_BUTTON, hInstance, NULL);
 
             OldScroll1 = (WNDPROC) SetWindowLong (hwndScroll1, GWL_WNDPROC, (LONG) ScrollProc);
             OldScroll2 = (WNDPROC) SetWindowLong (hwndScroll2, GWL_WNDPROC, (LONG) ScrollProc);
@@ -184,7 +186,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             hBrushStatic = CreateSolidBrush (GetSysColor (COLOR_BTNHIGHLIGHT));
             return 0;
-      case WM_SETCURSOR :
+      case WM_SETCURSOR :                                                       //specific cursor for list object
 
             hInstance = (HINSTANCE) GetWindowLong (hwnd, GWL_HINSTANCE);
             hCursor = LoadCursor (hInstance, MAKEINTRESOURCE (IDC_CURSOR));
@@ -236,7 +238,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     break;
                 case IDC_TASK_LIST :
 
-                    switch (HIWORD(wParam)){
+                    switch (HIWORD(wParam)){                                    //custom events on clicking elements from list
 
                         case LBN_SELCHANGE :
 
@@ -256,7 +258,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             switch (wParam) {
 
-                case VK_SPACE :
+                case VK_SPACE :                                                 //Ctrl+Space combination for exit message
 
                     if (HIBYTE(GetAsyncKeyState(VK_LCONTROL))) {
                         if (MessageBox(hwnd, "Do you want to exit?", "EXIT", MB_OKCANCEL) == IDOK) {
@@ -267,7 +269,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     break ;
             }
             break;
-        case WM_GETMINMAXINFO: {
+        case WM_GETMINMAXINFO: {                                                //set the maxim size of window
 
             DefWindowProc(hwnd, message, wParam, lParam);
             MINMAXINFO* mmi = (MINMAXINFO*) lParam;
@@ -281,7 +283,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             SetRect (&rcColor, 0, 0, cxClient, cyClient) ;
             SetFocus(hwnd);
             return 0 ;
-        case WM_SETFOCUS :
+        case WM_SETFOCUS :                                                      //focus for scrollbars
             if (idFocus == IDC_SCROLL_BAR1) {
                 SetFocus (hwndScroll1) ;
             } else if (idFocus == IDC_SCROLL_BAR2) {
@@ -290,7 +292,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                 SetFocus (hwndScroll3);
             }
             return 0 ;
-        case WM_VSCROLL :
+        case WM_VSCROLL :                                                       //scroll bars handling
 
             i = GetWindowLong ((HWND) lParam, GWL_ID) ;
 
@@ -373,7 +375,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     break ;
             }
 
-            if (i == IDC_SCROLL_BAR1) {
+            if (i == IDC_SCROLL_BAR1) {                                         //set scroll position for each scroll Bar
 
                 SetScrollPos (hwndScroll1, SB_CTL, color, TRUE) ;
                 wsprintf (szBuffer1, TEXT ("%i"), color) ;
@@ -398,17 +400,11 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             i = GetWindowLong ((HWND) lParam, GWL_ID);
             return (LRESULT) hBrush;
-        case WM_CTLCOLORSTATIC :
-
-            i = GetWindowLong ((HWND) lParam, GWL_ID) ;
-            if (i == IDC_LABEL1 || i == IDC_VAR_LABEL1 ||
-                i == IDC_LABEL2 || i == IDC_VAR_LABEL2 ||
-                i == IDC_LABEL3 || i == IDC_VAR_LABEL3) {  // static text controls
-                    SetTextColor ((HDC) wParam, crPrim);
-                    SetBkColor ((HDC) wParam, GetSysColor (COLOR_BTNHIGHLIGHT));
-                return (LRESULT) hBrushStatic ;
-            }
-            break ;
+        case WM_CTLCOLORSTATIC :                                                  //set label colors to white
+            SetTextColor ((HDC) wParam, crPrim);
+            SetBkColor ((HDC) wParam, GetSysColor (COLOR_BTNHIGHLIGHT));
+            return (LRESULT) hBrushStatic ;
+            break;
         case WM_SYSCOLORCHANGE :
 
             DeleteObject (hBrushStatic);
@@ -434,7 +430,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 LRESULT CALLBACK ScrollProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
     int id = GetWindowLong (hwnd, GWL_ID) ;
-
+                                                                                //scroll Procedure for setting the focus
     switch (message) {
 
         case WM_SETFOCUS :
