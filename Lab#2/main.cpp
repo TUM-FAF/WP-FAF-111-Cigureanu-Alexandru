@@ -258,7 +258,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 case VK_SPACE :
 
-                    if (GetAsyncKeyState(VK_LCONTROL) == 1) {
+                    if (HIBYTE(GetAsyncKeyState(VK_LCONTROL))) {
                         if (MessageBox(hwnd, "Do you want to exit?", "EXIT", MB_OKCANCEL) == IDOK) {
                             DestroyWindow(hwnd);
                         }
