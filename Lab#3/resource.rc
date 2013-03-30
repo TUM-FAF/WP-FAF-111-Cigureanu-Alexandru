@@ -1,0 +1,10 @@
+#include "resource.h"
+
+//IDI_ICON ICON DISCARDABLE "lab2.ico"
+
+//IDC_CURSOR CURSOR DISCARDABLE "cursorlab2.cur"
+
+IDI_BITMAP_IMG BITMAP DISCARDABLE "emblema2.bmp"
+//700 BITMAP "emblema2.bmp"
+BRICKS BITMAP DISCARDABLE "emblema2.bmp"
+HEADER BITMAP DISCARDABLE "header.bmp"
