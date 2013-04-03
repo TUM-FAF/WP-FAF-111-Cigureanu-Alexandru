@@ -26,19 +26,20 @@ Mandatory Objectives (completed)
 Objectives With Points (completed)
 ----------------------------------
 - Draw a custom bitmap image. **(1 pt)**
-- Add a switch that will change mouse ability to draw objects. **(2 pt)**
-- Draw a Bezier curve using mouse. **(1 pt)**
+- Add buttons that will change mouse ability to draw objects. **(2 pt)**
 - Fill an object with a gradient. **(1 pt)**
-- Delete objects using mouse clicking. **(2 pt)**
-- Use mouse as an eraser of an adjustable width. **(2 pt)**
+- Use mouse as a eraser of fixed width **(1 pt)**
 
 ![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Cigureanu-Alexandru/master/Lab%233/screen.png)
+
+What is specific to my laboratory:
+----------------------------------
+Some of elements like(circles, triangles, lines,) are drawn on buttons. Onclick event on buttons they are changing it colors into reverso and became focused.
+
+![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Cigureanu-Alexandru/master/Lab%233/screen2.png)
+
 Conclusions
 -----------
-This laboratory work was an interesting one. I had the opportunity to buid an applications will a lot of basic drawing features, somewhat resembling the MS Paint application. 
+A interesting lab for me. I think that with some effort, it would became a mini paint app.
 
-The main difficulty I encountered was with limiting the allowed draing area, but I managed to solve this issue.
-
-In this laboratory work I familiarized myself with all the drawing posibilities the Windows API gives us, and with the right way of working with the mouse, and letting the user control the application features using mouse clicks. 
-This laboratory work layed an important base ground for future laboratory works, especialy in working with animations.
-
+In this laboratory I studied basic drawing features of WinAPI, and mouse control. It gave me a considerable improve of my knowledge in windows programming.
