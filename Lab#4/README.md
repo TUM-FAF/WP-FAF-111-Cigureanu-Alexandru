@@ -17,8 +17,8 @@ Objectives With Points (completed)
 ----------------------------------
 - Increase and decrease animation speed using mouse wheel **(2 pt)**
 - Solve flicking problem **(2 pt)**
-- Add animated objects which interact with each other (2-6 pt), ex.:
-  - Few balls which have different velocity and moving angles, and colors. 
+- Add animated objects which interact with each other **(2-6 pt)** :
+  - Few balls which have different velocity, moving angles, and colors. 
   - add balls with mouse, 
 - Animate a Nyan Cat that leaves a rainbow tail (Math.floor(+30% for task with interacting objects))
 
