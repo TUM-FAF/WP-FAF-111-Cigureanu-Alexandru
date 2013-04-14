@@ -1,0 +1,2 @@
+#include "resource.h"
+NYANCAT BITMAP DISCARDABLE "nyancat3.bmp"
