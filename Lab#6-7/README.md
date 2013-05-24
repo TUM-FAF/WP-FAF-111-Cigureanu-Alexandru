@@ -21,7 +21,7 @@ Objectives With Points (completed)
 
 
 
-![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Cigureanu-Alexandru/master/Lab%236-7/example.png)(done)
+![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Cigureanu-Alexandru/master/Lab%236-7/example.png)
 
 What is specific to my laboratory:
 ----------------------------------
