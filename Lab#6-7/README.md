@@ -15,9 +15,9 @@ Mandatory Objectives (completed)
 
 Objectives With Points (completed)
 ----------------------------------
-- Your application should have at least 3 screens/windows (ex. main, settings, login...) (**3 pt**)
-- Intuitive design (**2 pt**)
-- Follow WinRT applications life cycle (**2 pt**)
+- Your application should have at least 3 screens/windows (ex. main, settings, login...) (*3 pt*)
+- Intuitive design (*2 pt*)
+- Follow WinRT applications life cycle (*2 pt*)
 
 
 
