@@ -1,29 +1,27 @@
-Windows Programming Laboratory Work #4
-======================================
+Windows Programming Laboratory Work #6-7
+========================================
 
 Title
 -----
-Windows Timer. Animation.
+Windows ART
 
 Contents
 --------
-- Windows timer
+- Windows ART API.
 
 Mandatory Objectives (completed)
 --------------------------------
-- Create an animation based on Windows timer which involves at least 5 different drawn objects
+- Application that computes the ideal body weight
 
 Objectives With Points (completed)
 ----------------------------------
-- Increase and decrease animation speed using mouse wheel **(2 pt)**
-- Solve flicking problem **(2 pt)**
-- Add animated objects which interact with each other **(2-6 pt)** :
-  - Few balls which have different velocity, moving angles, and colors. 
-  - add balls with mouse, 
-- Animate a Nyan Cat that leaves a rainbow tail (Math.floor(+30% for task with interacting objects))
+- Your application should have at least 3 screens/windows (ex. main, settings, login...) (**3 pt**)
+- Intuitive design (**2 pt**)
+- Follow WinRT applications life cycle (**2 pt**)
 
 
-![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Cigureanu-Alexandru/master/Lab%234/screen.png)(done)
+
+![Result](https://raw.github.com/TUM-FAF/WP-FAF-111-Cigureanu-Alexandru/master/Lab%236-7/example.png)(done)
 
 What is specific to my laboratory:
 ----------------------------------
