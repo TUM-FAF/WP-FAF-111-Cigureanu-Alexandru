@@ -25,11 +25,7 @@ Objectives With Points (completed)
 
 What is specific to my laboratory:
 ----------------------------------
-It has both Nyan Cat and Nyan Cat Song.
-In order to make sure that songs plays, you have to add winmm.dll(C:/windows/system32/) to libraries. In Code::Blocks : Project -> Build Option -> linker settings -> ADD
-It can be add up to 20 bounce balls with different speed, angle of moving an color by left mouse button clickig.
-Remark. I'm not sure if flickering problem is solved. I consulted petzold and you proposal links.
+It's a simple app that computes the ideal body weight. Just enter your age and height and voi la.
 Conclusions
 -----------
-Funny Lab. I used to play around Nyan cat a bit. Finally I'm done with problem.
-What I liked most is the fact how simple is timer using.
+I still can believe that windows app can be written in JS, HTML and CSS. Congrats to Microsoft
